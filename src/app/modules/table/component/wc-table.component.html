@@ -1,0 +1,53 @@
+<ng-container>
+  <ng-container *ngIf="options">
+    <div class="container-fluid">
+      <div class="card">
+        <table class="table table-striped">
+          <thead *ngIf="options.columns">
+            <tr>
+              <th *ngIf="options.linenumbers" scope="col">#</th>
+              <th *ngFor="let column of options.columns">{{getLabel(column)}}
+              </th>
+            </tr>
+          </thead>
+          <tbody *ngIf="options.cells">
+            <tr *ngFor="let row of datasource; index as i; trackBy:trackBy">
+              <th *ngIf="options.linenumbers" scope="row">{{ row.__trans.line }}
+              </th>
+              <td *ngFor="let cell of options.cells">
+                {{getValue(cell, row)}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="d-flex justify-content-between p-2" *ngIf="options.footer">
+          <ng-container *ngIf="options.footer.pagination">
+            <ngb-pagination [collectionSize]="size" [(page)]="page"
+              [rotate]="true" [pageSize]="pageSize" [ellipses]="false"
+              (pageChange)="onPageChange()" [boundaryLinks]="true">
+              <ng-template ngbPaginationPages let-page let-pages="pages">
+                <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+                  <div class="mb-3 d-flex flex-nowrap px-2">
+                    <span id="paginationDescription"
+                      class="col-form-label text-nowrap px-2"> Page {{page}} of
+                      {{pages.length}}</span>
+                  </div>
+                </li>
+              </ng-template>
+            </ngb-pagination>
+          </ng-container>
+          <ng-container>
+            <div>
+              <select class="form-select form-select-sm" [(ngModel)]="pageSize"
+                (ngModelChange)="onPageChange()">
+                <option *ngFor="let ps of sizes" [ngValue]="ps">{{ps}} items per
+                  page
+                </option>
+              </select>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>
