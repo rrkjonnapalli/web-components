@@ -1,5 +1,5 @@
 import { EFormOpenType, EFormElementType, EFormAction } from "@enums/form-options.enum";
-import { ESize, EPosition } from "@enums/generic.enum";
+import { ESize, EHPosition } from "@enums/generic.enum";
 
 export interface IFormAction {
   title?: string;
@@ -33,7 +33,7 @@ export interface IFormTab {
 export interface IFormOptions {
   openType?: EFormOpenType,
   header?: {
-    title?: EPosition;
+    title?: EHPosition;
     actions?: {
       position?: string;
       values: IFormAction[];
@@ -44,7 +44,7 @@ export interface IFormOptions {
   size?: ESize;
   footer?: {
     actions?: {
-      position?: EPosition;
+      position?: EHPosition;
       values: IFormAction[];
     }
   }

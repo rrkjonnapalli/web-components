@@ -24,9 +24,10 @@ export enum ETableCellAction {
   'CELL_EDIT',
   'CELL_DELETE',
   'CELL_OPEN_MODEL',
-  'CELL_MASK',
+  'CELL_HIDE',
   'CELL_SHOW',
-  'CELL_COPY'
+  'CELL_COPY',
+  'CELL_GOTO'
 };
 
 export enum ETableCellEditType {

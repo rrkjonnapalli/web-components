@@ -1,7 +1,6 @@
 <ng-container>
   <ng-container *ngIf="options">
     <div class="container-fluid">
-      <div class="card">
         <table class="table table-striped">
           <thead *ngIf="options.columns">
             <tr>
@@ -14,7 +13,7 @@
             <tr *ngFor="let row of datasource; index as i; trackBy:trackBy">
               <th *ngIf="options.linenumbers" scope="row">{{ row.__trans.line }}
               </th>
-              <td *ngFor="let cell of options.cells">
+              <td *ngFor="let cell of options.cells" class="table-cell">
                 {{getValue(cell, row)}}
               </td>
             </tr>
@@ -47,7 +46,6 @@
             </div>
           </ng-container>
         </div>
-      </div>
     </div>
   </ng-container>
 </ng-container>

@@ -12,10 +12,16 @@ export enum EAppDataSource {
   'remote'
 };
 
-export enum EPosition {
+export enum EHPosition {
   'left',
   'center',
   'right'
+};
+
+export enum EVPosition {
+  'top',
+  'middle',
+  'bottom'
 };
 
 export enum EPageSize {
