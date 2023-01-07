@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { WcTableComponent } from './component/wc-table.component';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
+import { SharedModule } from '../shared/shared.module';
 
 
 
@@ -16,7 +17,8 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     FormsModule,
-    NgbPaginationModule
+    NgbPaginationModule,
+    SharedModule
   ]
 })
 export class WcTableModule { }

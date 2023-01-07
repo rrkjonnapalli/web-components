@@ -9,7 +9,7 @@ export enum ETableRowAction {
   'ROW_DELETE',
   'ROW_CLONE',
   'ROW_GOTO',
-  'ROW_OPEN_MODEL'
+  'ROW_OPEN_DIALOG'
 };
 
 export enum ETableColumnAction {
@@ -23,8 +23,9 @@ export enum ETableColumnAction {
 export enum ETableCellAction {
   'CELL_EDIT',
   'CELL_DELETE',
-  'CELL_OPEN_MODEL',
+  'CELL_OPEN_DIALOG',
   'CELL_HIDE',
+  'CELL_MASK',
   'CELL_SHOW',
   'CELL_COPY',
   'CELL_GOTO'
@@ -38,5 +39,6 @@ export enum ETableCellEditType {
 export enum ETableCellType {
   'image',
   'tags',
+  'dialog',
   'default'
 }

@@ -8,16 +8,20 @@ import {
   ETableColumnAction,
   ETableHeaderAction
 } from '@enums/table-options.enum';
+import { IObject } from './generic.interface';
 
 export interface ITableAction {
+  hide?: boolean;
   title?: string;
   label?: string;
   icon?: string;
   color?: string;
-  styleName?: string;
-  actionName?: ETableCellAction | ETableColumnAction | ETableRowAction | ETableHeaderAction;
+  styles?: string;
+  autorun?: boolean;
+  type?: ETableCellAction | ETableColumnAction | ETableRowAction | ETableHeaderAction;
   execute?: Function;
-  source?: EAppDataSource
+  source?: EAppDataSource,
+  opts?: IObject
 }
 
 export interface TableCellEditAction extends ITableAction {

@@ -1,9 +1,10 @@
 import { faker } from '@faker-js/faker';
 import { Observable, of } from 'rxjs';
+import { ETableCellAction } from '@enums/table-options.enum';
 import { Post } from '../interfaces/demo/post.interface';
 import { User } from '../interfaces/demo/user.interface';
 import { ITableCell, ITableColumn } from '../interfaces/table-options.interface';
-
+import * as lodash from 'lodash'
 
 export interface ColumnCellOutput {
   columns: ITableColumn[];
@@ -45,12 +46,32 @@ export const getColumnsAndCells = (schema: any): ColumnCellOutput => {
     noactions: true,
   }));
   const cells: ITableCell[] = columns.map((c) => {
-    const type = c.columnName && schema[c.columnName].element ? schema[c.columnName].element : undefined;
+    const type = lodash.get(schema, [lodash.get(c, 'columnName', ''), 'element']);
     return {
       field: c.columnName ? [c.columnName] : [],
-      ...(type ? { type } : {})
+      ...(type
+        ? type === 'dialog'
+          ? {
+            type,
+            actions: [
+              {
+                hide: true,
+                type: ETableCellAction.CELL_HIDE,
+                autorun: true
+              },
+              {
+                title: 'Open',
+                label: 'i',
+                type: ETableCellAction.CELL_OPEN_DIALOG
+              }
+            ]
+          }
+          : { type }
+        : {})
     };
   });
+  // columns.unshift({ label: '#' });
+  // cells.unshift({ field: ['__trans', 'lineNo'] });
   return {
     columns,
     cells

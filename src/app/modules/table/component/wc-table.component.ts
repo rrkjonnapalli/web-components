@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ITableOptions } from '@interfaces';
 import { getFieldLabel } from '@constants';
-import { startCase, get as lget } from 'lodash';
+import * as lodash from 'lodash';
 import { ITableCell } from '@src/app/interfaces/table-options.interface';
 import { EPageSize } from '@src/app/enums/generic.enum';
 
@@ -23,17 +23,39 @@ export class WcTableComponent implements OnInit {
 
   datasource: any = [];
 
+  cellAutoruns: any = [];
+
   constructor() { }
 
   ngOnInit(): void {
-    this.data = this.data?.map((row, ix) => {
-      row.__trans = {
-        line: ix + 1
-      };
-      return row;
-    });
+    this.initSetup();
+    this.initDataSetup();
     this.size = this.data?.length || 0;
     this.datasource = this.getCurrentDatasource();
+  }
+
+  initSetup() {
+    this.cellAutoruns = [];
+    for (let cell of (this.options?.cells || [])) {
+      const { actions = [] } = cell;
+      for (let action of actions) {
+        if (action?.autorun) {
+          this.cellAutoruns.push(action.type);
+        }
+      }
+    }
+    if (this.options?.linenumbers) {
+      this.options?.columns?.unshift({ label: '#' });
+      this.options?.cells?.unshift({ field: ['__trans', 'lineNo'] });
+    }
+  }
+
+  initDataSetup() {
+    this.data = this.data?.map((row, ix) => {
+      row.__trans = {};
+      lodash.set(row, ['__trans', 'lineNo'], ix + 1);
+      return row;
+    });
   }
 
   getCurrentDatasource(): any[] {
@@ -43,7 +65,7 @@ export class WcTableComponent implements OnInit {
   }
 
   trackBy(_index: number, item: any) {
-    return item.__trans.line;
+    return item.__trans.lineNo;
   }
 
   getLabel(column: any) {
@@ -51,14 +73,14 @@ export class WcTableComponent implements OnInit {
       return null;
     }
     if (typeof column === 'string') {
-      return startCase(column);
+      return lodash.startCase(column);
     }
     if (column.label) {
       return column.label;
     }
     const key = column.field || column.columnName || column.key;
     const label = getFieldLabel(key)
-    return label || startCase(key);
+    return label || lodash.startCase(key);
   }
 
   onPageChange() {
@@ -70,7 +92,7 @@ export class WcTableComponent implements OnInit {
     if (!field) {
       return null;
     }
-    return lget(row, field);
+    return lodash.get(row, field);
   }
 
 }

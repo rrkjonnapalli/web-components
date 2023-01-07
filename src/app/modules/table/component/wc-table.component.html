@@ -4,17 +4,21 @@
         <table class="table table-striped">
           <thead *ngIf="options.columns">
             <tr>
-              <th *ngIf="options.linenumbers" scope="col">#</th>
               <th *ngFor="let column of options.columns">{{getLabel(column)}}
               </th>
             </tr>
           </thead>
           <tbody *ngIf="options.cells">
             <tr *ngFor="let row of datasource; index as i; trackBy:trackBy">
-              <th *ngIf="options.linenumbers" scope="row">{{ row.__trans.line }}
-              </th>
-              <td *ngFor="let cell of options.cells" class="table-cell">
+              <td *ngFor="let cell of options?.cells" class="table-cell">
                 {{getValue(cell, row)}}
+                <span>
+                  <ng-container *ngFor="let action of cell?.actions">
+                    <ng-container *ngIf="!action.hide">
+                      {{action | json}}
+                    </ng-container>
+                  </ng-container>
+                </span>
               </td>
             </tr>
           </tbody>
